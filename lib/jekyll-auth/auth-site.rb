@@ -12,10 +12,12 @@ class JekyllAuth
       :secret => ENV['SESSION_SECRET'] || SecureRandom.hex
     }
 
-    set :github_options, {
-      :client_id     => ENV['GITHUB_CLIENT_ID'],
-      :client_secret => ENV['GITHUB_CLIENT_SECRET'],
-      :scopes        => ENV['GITHUB_SCOPES'] || 'user'
+    set :github_options, Proc.new {
+      {
+        :client_id     => ENV['GITHUB_CLIENT_ID'],
+        :client_secret => ENV['GITHUB_CLIENT_SECRET'],
+        :scopes        => ENV['GITHUB_SCOPES'] || 'user'
+      }
     }
 
     register Sinatra::Auth::Github
